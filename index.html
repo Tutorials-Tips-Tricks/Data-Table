@@ -1,0 +1,145 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <title>Data Table with ajax</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+
+    <div class="container">
+        <div class="row">
+            <table id="dataTables" class="table table-bordered" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Position</th>
+                        <th scope="col">Office</th>
+                        <th scope="col"> Age</th>
+                        <th >Start date</th>
+                        <th>Salary</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <!-- To Be Filled By JS-->
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <th>Name</th>
+                        <th>Position</th>
+                        <th>Office</th>
+                        <th>Age</th>
+                        <th>Start date</th>
+                        <th>Salary</th>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <a id="back-to-top" href="#" class="btn btn-primary btn-lg back-to-top" role="button"
+                title="Click to return on the top page" data-toggle="tooltip" data-placement="left">
+                <span class="glyphicon glyphicon-chevron-up">
+                </span></a>
+
+        </div>
+    </div>
+    <!-- jQuery Script -->
+
+    <script type="text/javascript">
+
+        const dataTableBody = document.querySelector("#dataTables > tbody");
+        function loadDataTable() {
+            const request = new XMLHttpRequest();
+            request.open("get", "data/dataTable.json");
+            request.onload = () => {
+                try {
+                    const json = JSON.parse(request.responseText);
+                    populateDataTable(json);
+
+                } catch (e) {
+                    console.warn("Could not load Data");
+                }
+            };
+            request.send();
+        }
+
+        function populateDataTable(json) {
+
+            // //Clears out existing table data
+            while (dataTableBody.firstChild) {
+                dataTableBody.removeChild(dataTableBody.firstChild);
+            }
+
+            // Populate table
+            json.forEach((row) => {
+                const tr = document.createElement("tr");
+
+                row.forEach((cell) => {
+                    const td = document.createElement("td");
+                    td.textContent = cell;
+                    tr.appendChild(td);
+                })
+                dataTableBody.appendChild(tr);
+            });
+
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            loadDataTable();
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#dataTables').DataTable({
+                "responsive": true
+
+            });
+        });
+
+
+
+    </script>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+
+
+    <script type="text/javascript" language="javascript"
+        src="https:///cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css"></script>
+
+    <script type="text/javascript" language="javascript"
+        src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
+    <script type="text/javascript" language="javascript"
+        src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+    <!-- JSON -->
+    <script type="text/javascript" src="/data/dataTable.json"></script>
+</body>
+
+</html>

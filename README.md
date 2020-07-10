@@ -1,4 +1,4 @@
-# Data-Table
+# Reaponsive Data Table
 
 DataTables has the ability to read data from virtually any JSON data source that can be obtained by Ajax. 
 This can be done, in its most simple form, by setting the ajax option to the address of the JSON data source.
